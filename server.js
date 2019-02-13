@@ -60,11 +60,11 @@ app.get('/search-track', function (request, response) {
     });
 });
 
-app.get('/category-playlists', function (request, response) {
+app.get('/category-playlists1', function (request, response) {
   
   // Get playlists from a browse category
   // Find out which categories are available here: https://beta.developer.spotify.com/console/get-browse-categories/
-  spotifyApi.getPlaylistsForCategory('jazz', { limit : 5 })
+  spotifyApi.getPlaylistsForCategory('pop', { limit : 10 , country : "JP", locale: "en_US"})
     .then(function(data) {
     
     // Send the list of playlists
@@ -73,9 +73,28 @@ app.get('/category-playlists', function (request, response) {
   }, function(err) {
     console.error(err);
   });
+  
+  
 });
 
-app.get('/audio-features', function (request, response) {
+app.get('/category-playlists2', function (request, response) {
+  
+  // Get playlists from a browse category
+  // Find out which categories are available here: https://beta.developer.spotify.com/console/get-browse-categories/
+  spotifyApi.getPlaylistsForCategory('pop', { limit : 10 , country : "ES", locale: "es_ES"})
+    .then(function(data) {
+    
+    // Send the list of playlists
+    response.send(data.body.playlists);
+    
+  }, function(err) {
+    console.error(err);
+  });
+  
+  
+});
+
+app.get('/audio-features1', function (request, response) {
   
   // Get the audio features for a track ID
   spotifyApi.getAudioFeaturesForTrack('4uLU6hMCjMI75M1A2tKUQC')
@@ -89,10 +108,24 @@ app.get('/audio-features', function (request, response) {
     });
 });
 
+app.get('/audio-features2', function (request, response) {
+  
+  // Get the audio features for a track ID
+  spotifyApi.getAudioFeaturesForTrack('250RLekaiL1q9qZer975Eg')
+    .then(function(data) {
+    
+      //Send the audio features object
+      response.send(data.body);
+    
+    }, function(err) {
+      console.error(err);
+    });
+});
+
 app.get('/artist', function (request, response) {
   
   // Get information about an artist
-  spotifyApi.getArtist('6jJ0s89eD6GaHleKKya26X')
+  spotifyApi.getArtist('1EowJ1WwkMzkCkRomFhui7')
     .then(function(data) {
     
       // Send the list of tracks
@@ -103,10 +136,10 @@ app.get('/artist', function (request, response) {
     });
 });
 
-app.get('/artist-top-tracks', function (request, response) {
+app.get('/artist-top-tracks1A', function (request, response) {
   
   // Get an artist's top tracks in a country
-  spotifyApi.getArtistTopTracks('0LcJLqbBmaGUft1e9Mm8HV', 'SE')
+  spotifyApi.getArtistTopTracks('0LcJLqbBmaGUft1e9Mm8HV', 'US')
     .then(function(data) {
     
       // Send the list of tracks
@@ -117,6 +150,60 @@ app.get('/artist-top-tracks', function (request, response) {
     });
 });
 
+app.get('/artist-top-tracks1B', function (request, response) {
+  
+  // Get an artist's top tracks in a country
+  spotifyApi.getArtistTopTracks('0LcJLqbBmaGUft1e9Mm8HV', 'MX')
+    .then(function(data) {
+    
+      // Send the list of tracks
+      response.send(data.body.tracks);
+    
+    }, function(err) {
+      console.error(err);
+    });
+});
+
+app.get('/artist-top-tracks2A', function (request, response) {
+  
+  // Get an artist's top tracks in a country
+  spotifyApi.getArtistTopTracks('1snhtMLeb2DYoMOcVbb8iB', 'CA')
+    .then(function(data) {
+    
+      // Send the list of tracks
+      response.send(data.body.tracks);
+    
+    }, function(err) {
+      console.error(err);
+    });
+});
+
+app.get('/artist-top-tracks2B', function (request, response) {
+  
+  // Get an artist's top tracks in a country
+  spotifyApi.getArtistTopTracks('1snhtMLeb2DYoMOcVbb8iB', 'US')
+    .then(function(data) {
+    
+      // Send the list of tracks
+      response.send(data.body.tracks);
+    
+    }, function(err) {
+      console.error(err);
+    });
+});
+
+app.get('/search-playlists', function(request, response){
+
+  // Search playlists whose name or description contains 'valentine'
+  spotifyApi.searchPlaylists('valentine')
+    .then(function(data) {
+    
+      response.send(data.body.playlists.items);
+    
+    }, function(err) {
+      console.error(err);
+    });
+});
 
 //-------------------------------------------------------------//
 //------------------------ WEB SERVER -------------------------//
